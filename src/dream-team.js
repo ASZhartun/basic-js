@@ -28,7 +28,6 @@ function createDreamTeam(members) {
   } else return false;
 }
 
-console.log(createDreamTeam(['Olivia', 1111, 'Lily', 'Oscar', true, null]));
 module.exports = {
   createDreamTeam
 };
