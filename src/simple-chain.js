@@ -4,26 +4,50 @@ const { NotImplementedError } = require('../extensions/index.js');
  * Implement chainMaker object according to task description
  * 
  */
-const chainMaker = {
+ const chainMaker = {
+  storage : [],
   getLength() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    return this.storage.length;
   },
-  addLink(/* value */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  addLink(value) {
+    value = value == null ? 'null' : value;
+    this.storage.push((value).toString());
+    return this;
   },
-  removeLink(/* position */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  removeLink(position) {
+    position = +position;
+    if (position > 0 && position < this.storage.length) {
+      let temp = [];
+      for (let i = 0; i < this.storage.length; i++) {
+        if (i+1 != position) temp.push(this.storage[i]);
+      }
+      this.storage = temp;
+      return this;
+    } else {
+      throw new Error("You can't remove incorrect link!");
+    }
+    
   },
   reverseChain() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    let temp = [];
+    let len = this.storage.length;
+    for (let i = 0; i < len; i++) {
+      temp.push(this.storage[len - i - 1]);
+    }
+    this.storage = temp;
+    return this;
   },
   finishChain() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    let finish = '( ' + this.storage[0] + ' )';
+    let len = this.storage.length;
+    for (let i = 1; i < len; i++) {
+      finish+=this.wrapper(this.storage[i]);
+    }
+    return finish;
+  },
+
+  wrapper(value) {
+    return "~~( " + value + " )";
   }
 };
 
